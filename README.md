@@ -27,3 +27,16 @@ Kaggle Titanic dataset, Logistic Regression with this approach typically
 achieves ~78–80% accuracy on the test split.
 ## Tech Stack
 Python, Pandas, NumPy, scikit-learn, joblib
+## Exploratory Data Analysis
+
+### Survival Distribution
+
+![Survival Distribution](plots/survival_distribution.png)
+
+### Survival by Gender
+
+![Survival by Gender](plots/survival_by_gender.png)
+
+### Survival by Passenger Class
+
+![Survival by Class](plots/survival_by_class.png)
