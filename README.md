@@ -53,3 +53,13 @@ I compared three machine learning models using the same train-test split:
 ### Best Performing Model
 
 The **Random Forest** model achieved the highest accuracy among the three models tested.
+## Kaggle Results
+
+The final Logistic Regression model was submitted to the Kaggle Titanic competition.
+
+| Metric | Score |
+|---|---:|
+| Local Validation Accuracy | 80.45% |
+| Kaggle Public Score | 0.75358 |
+
+The difference between the local validation accuracy and Kaggle score is expected because the two evaluations use different datasets.
