@@ -40,3 +40,16 @@ Python, Pandas, NumPy, scikit-learn, joblib
 ### Survival by Passenger Class
 
 ![Survival by Class](plots/survival_by_class.png)
+## Model Comparison
+
+I compared three machine learning models using the same train-test split:
+
+| Model | Accuracy |
+|---|---:|
+| Logistic Regression | 80.45% |
+| Decision Tree | 75.42% |
+| Random Forest | 81.56% |
+
+### Best Performing Model
+
+The **Random Forest** model achieved the highest accuracy among the three models tested.
