@@ -8,41 +8,100 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 
 
-# Load data
+# ============================================================
+# Load Data
+# ============================================================
+
 df = pd.read_csv("data/train.csv")
 
+print(f"Loaded dataset with shape {df.shape}")
 
-# Basic preprocessing
+
+# ============================================================
+# Data Cleaning
+# ============================================================
+
+# Fill missing Age
 df["Age"] = df["Age"].fillna(df["Age"].median())
-df["Embarked"] = df["Embarked"].fillna(df["Embarked"].mode()[0])
 
+# Fill missing Fare
+df["Fare"] = df["Fare"].fillna(df["Fare"].median())
+
+# Fill missing Embarked
+df["Embarked"] = df["Embarked"].fillna(
+    df["Embarked"].mode()[0]
+)
+
+
+# ============================================================
+# Feature Engineering
+# ============================================================
+
+# Create HasCabin feature
+df["HasCabin"] = df["Cabin"].notna().astype(int)
+
+# Create FamilySize
+df["FamilySize"] = (
+    df["SibSp"] +
+    df["Parch"] +
+    1
+)
+
+# Create IsAlone
+df["IsAlone"] = (
+    df["FamilySize"] == 1
+).astype(int)
+
+# Convert Sex to numerical values
 df["Sex"] = df["Sex"].map({
     "male": 0,
     "female": 1
 })
 
+# One-hot encode Embarked
 df = pd.get_dummies(
     df,
     columns=["Embarked"],
-    drop_first=True
+    drop_first=True,
+    dtype=int
 )
 
 
-# Select features
-features = [
-    "Pclass",
-    "Sex",
-    "Age",
-    "SibSp",
-    "Parch",
-    "Fare"
+# ============================================================
+# Remove Unnecessary Columns
+# ============================================================
+
+columns_to_drop = [
+    "Cabin",
+    "Name",
+    "Ticket",
+    "PassengerId"
 ]
 
-X = df[features]
+df = df.drop(
+    columns=[
+        c for c in columns_to_drop
+        if c in df.columns
+    ]
+)
+
+
+# ============================================================
+# Select Features and Target
+# ============================================================
+
+X = df.drop(columns=["Survived"])
 y = df["Survived"]
 
 
-# Train/test split
+print("\nFeatures used:")
+print(X.columns.tolist())
+
+
+# ============================================================
+# Train/Test Split
+# ============================================================
+
 X_train, X_test, y_train, y_test = train_test_split(
     X,
     y,
@@ -52,20 +111,30 @@ X_train, X_test, y_train, y_test = train_test_split(
 )
 
 
-# Scale data for Logistic Regression
+# ============================================================
+# Scale Data for Logistic Regression
+# ============================================================
+
 scaler = StandardScaler()
 
 X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
 
 
-# Models
+# ============================================================
+# Define Models
+# ============================================================
+
 models = {
-    "Logistic Regression": LogisticRegression(max_iter=1000),
+    "Logistic Regression": LogisticRegression(
+        max_iter=1000
+    ),
+
     "Decision Tree": DecisionTreeClassifier(
         random_state=42,
         max_depth=5
     ),
+
     "Random Forest": RandomForestClassifier(
         n_estimators=100,
         random_state=42
@@ -73,18 +142,35 @@ models = {
 }
 
 
-# Train and evaluate
+# ============================================================
+# Train and Evaluate Models
+# ============================================================
+
 results = []
 
 for name, model in models.items():
 
     if name == "Logistic Regression":
-        model.fit(X_train_scaled, y_train)
-        predictions = model.predict(X_test_scaled)
+
+        model.fit(
+            X_train_scaled,
+            y_train
+        )
+
+        predictions = model.predict(
+            X_test_scaled
+        )
 
     else:
-        model.fit(X_train, y_train)
-        predictions = model.predict(X_test)
+
+        model.fit(
+            X_train,
+            y_train
+        )
+
+        predictions = model.predict(
+            X_test
+        )
 
     accuracy = accuracy_score(
         y_test,
@@ -93,16 +179,20 @@ for name, model in models.items():
 
     results.append({
         "Model": name,
-        "Accuracy": accuracy
+        "Accuracy": accuracy * 100
     })
 
 
-# Create comparison table
+# ============================================================
+# Create Comparison Table
+# ============================================================
+
 results_df = pd.DataFrame(results)
 
-results_df["Accuracy"] = (
-    results_df["Accuracy"] * 100
-).round(2)
+results_df["Accuracy"] = results_df[
+    "Accuracy"
+].round(2)
+
 
 print("\nModel Comparison")
 print("================")
@@ -112,8 +202,15 @@ print(
 )
 
 
-# Save table
+# ============================================================
+# Save Results
+# ============================================================
+
 results_df.to_csv(
     "model_comparison.csv",
     index=False
+)
+
+print(
+    "\nComparison saved as model_comparison.csv"
 )
