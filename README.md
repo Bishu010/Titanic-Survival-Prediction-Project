@@ -63,6 +63,7 @@ The final Logistic Regression model was submitted to the Kaggle Titanic competit
 | Kaggle Public Score | 0.75358 |
 
 The difference between the local validation accuracy and Kaggle score is expected because the two evaluations use different datasets.
+
 ## How to Run
 
 ### 1. Clone the repository
@@ -70,12 +71,47 @@ The difference between the local validation accuracy and Kaggle score is expecte
 ```bash
 git clone https://github.com/Bishu010/Titanic-Survival-Prediction-Project.git
 cd Titanic-Survival-Prediction-Project
-pip install -r requirements.txt
-python src/eda.py
-python src/train.py
-python src/model_comparison.py
+```
 
-##requirements
+### 2. Install the required dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 3. Run Exploratory Data Analysis
+
+```bash
+python src/eda.py
+```
+
+The EDA script generates visualizations inside the `plots/` folder.
+
+### 4. Train the model
+
+```bash
+python src/train.py
+```
+
+This will:
+
+- Load and preprocess the Titanic dataset
+- Engineer additional features
+- Train a Logistic Regression model
+- Evaluate the model
+- Save the trained model and scaler
+- Generate `submission.csv` for Kaggle
+
+### 5. Compare machine learning models
+
+```bash
+python src/model_comparison.py
+```
+
+This compares Logistic Regression, Decision Tree, and Random Forest models.
+
+## Requirements
+
 - Python 3.10+
 - pandas
 - numpy
