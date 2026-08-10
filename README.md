@@ -13,9 +13,7 @@ This is a binary classification problem.
 ## Dataset
 - Source: [Titanic dataset on Kaggle](https://www.kaggle.com/c/titanic/data)
 ## Approach
-- Data cleaning: filled missing `Age` with median, missing `Embarked` with
-  the most common port, dropped `Cabin` (too many missing values), dropped
-  `Name`/`Ticket`/`PassengerId` (not useful for a simple model)
+- - Data cleaning: filled missing `Age`, `Fare`, and `Embarked` values; created a `HasCabin` indicator from `Cabin`, then dropped the raw `Cabin`, `Name`, `Ticket`, and `PassengerId` columns.
 - Feature engineering: created `FamilySize` (siblings/spouses + parents/children + self)
   and `IsAlone`; encoded `Sex` and `Embarked` as numbers
 - Model: Logistic Regression (simple, fast, and easy to interpret — a great
