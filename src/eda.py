@@ -33,7 +33,7 @@ plt.savefig(
     "plots/survival_distribution.png"
 )
 
-plt.show()
+plt.close()
 
 
 # ============================================================
