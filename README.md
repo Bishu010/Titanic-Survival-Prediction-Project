@@ -63,3 +63,22 @@ The final Logistic Regression model was submitted to the Kaggle Titanic competit
 | Kaggle Public Score | 0.75358 |
 
 The difference between the local validation accuracy and Kaggle score is expected because the two evaluations use different datasets.
+## How to Run
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/Bishu010/Titanic-Survival-Prediction-Project.git
+cd Titanic-Survival-Prediction-Project
+pip install -r requirements.txt
+python src/eda.py
+python src/train.py
+python src/model_comparison.py
+
+##requirements
+- Python 3.10+
+- pandas
+- numpy
+- scikit-learn
+- matplotlib
+- joblib
