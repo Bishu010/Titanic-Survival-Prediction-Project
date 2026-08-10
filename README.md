@@ -50,10 +50,15 @@ I compared three machine learning models using the same train-test split:
 
 ### Best Performing Model
 
-The **Random Forest** model achieved the highest accuracy among the three models tested.
+The Random Forest model achieved the highest accuracy among the three models tested.
 ## Kaggle Results
 
 The final Logistic Regression model was submitted to the Kaggle Titanic competition.
+### Model Selection
+
+Random Forest achieved the highest validation accuracy among the three models tested. 
+The current Kaggle submission uses Logistic Regression as the baseline model.
+Future work could evaluate and submit the Random Forest model after applying the same feature engineering pipeline.
 
 | Metric | Score |
 |---|---:|
